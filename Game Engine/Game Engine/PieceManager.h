@@ -20,7 +20,8 @@ public:
 
     void renderPieces();
 
-    std::vector<std::pair<int, int>> mouseDown(int x, int y);
+    std::vector<std::pair<int, int>> mouseDown(const Piece* piece, int x, int y);
 
     Piece* getPiece(int x, int y) const;
+    void movePiece(Piece* piece, int x, int y);
 };

@@ -2,11 +2,7 @@
 
 // Constructor
 
-Board::Board(Uint16 size, Uint16 xsp, Uint16 ysp) {
-    board_size = size;
-    board_xsp = xsp;
-    board_ysp = ysp;
-    piece_manager = PieceManager::getInstance();
+Board::Board(Uint16 size, Uint16 xsp, Uint16 ysp) : board_size(size), board_xsp(xsp), board_ysp(ysp), piece_manager(PieceManager::getInstance()), due_piece(nullptr), turn(true) {
 }
 
 // Rendering method
@@ -39,5 +35,39 @@ void Board::render_pieces() {
 // Mouse methods
 
 void Board::mouseDown(int x, int y) {
-    valid_moves = piece_manager->mouseDown(x, y);
+    // Check if the click is on a valid move
+    int i = x / 100;
+    int j = y / 100;
+    if (due_piece) {
+        for (const auto& [a, b] : valid_moves) {
+            if (a == i && b == j) {
+                piece_manager->movePiece(due_piece, i, j);
+                valid_moves.clear();
+                turn = !turn;
+                due_piece = nullptr;
+                return;
+            }
+        }
+        due_piece = piece_manager->getPiece(i, j);
+        if (due_piece) {
+            if (!(due_piece->getIsWhite() ^ turn)) {
+                valid_moves = piece_manager->mouseDown(due_piece, x, y);
+            }
+            else {
+                valid_moves.clear();
+                due_piece = nullptr;
+            }
+        }
+    }
+    else {
+        due_piece = piece_manager->getPiece(i, j);
+        if (due_piece) {
+            if (!(due_piece->getIsWhite() ^ turn)) {
+                valid_moves = piece_manager->mouseDown(due_piece, x, y);
+            }
+            else {
+                due_piece = nullptr;
+            }
+		}
+    }
 }

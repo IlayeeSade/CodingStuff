@@ -41,23 +41,23 @@ void Piece::render() {
 
 // Getters and setters
 
-SDL_Rect* Piece::getRect() {
+SDL_Rect* Piece::getRect() const {
 	return rect;
 }
 
-SDL_Surface* Piece::getSurface() {
+SDL_Surface* Piece::getSurface() const {
 	return surface;
 }
 
-SDL_Texture* Piece::getTexture() {
+SDL_Texture* Piece::getTexture() const {
 	return texture;
 }
 
-int Piece::getX() { 
+int Piece::getX() const {
     return cords.first;
 }
 
-int Piece::getY() { 
+int Piece::getY() const {
     return cords.second;
 }
 
@@ -73,17 +73,22 @@ void Piece::setTexture(SDL_Texture* texture) {
 	this->texture = texture;
 }
 
-bool Piece::getIsWhite() {
+bool Piece::getIsWhite() const {
     return isWhite;
 }
 
-std::pair<int, int> Piece::getCords() {
+void Piece::setCords(int x, int y) {
+	cords = {x, y};
+	rectDirty = true;
+}
+
+std::pair<int, int> Piece::getCords() const {
     return cords;
 }
 
 // getValidMoves for each piece - GPT Generated, revised by me
 
-std::vector<std::pair<int, int>> Pawn::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> Pawn::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
     int direction = isWhite ? -1 : 1;
     int startRow = isWhite ? 6 : 1;
@@ -117,7 +122,7 @@ std::vector<std::pair<int, int>> Pawn::getValidMoves(Piece* board[8][8]) {
     return moves;
 }
 
-std::vector<std::pair<int, int>> Rook::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> Rook::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
 
     // Directions: Up, Down, Left, Right
@@ -150,7 +155,7 @@ std::vector<std::pair<int, int>> Rook::getValidMoves(Piece* board[8][8]) {
     return moves;
 }
 
-std::vector<std::pair<int, int>> Knight::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> Knight::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
     int offsets[8][2] = {
         {1, 2}, {2, 1}, {-1, 2}, {-2, 1},
@@ -172,7 +177,7 @@ std::vector<std::pair<int, int>> Knight::getValidMoves(Piece* board[8][8]) {
     return moves;
 }
 
-std::vector<std::pair<int, int>> Bishop::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> Bishop::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
 
     // Directions: Diagonals
@@ -205,7 +210,7 @@ std::vector<std::pair<int, int>> Bishop::getValidMoves(Piece* board[8][8]) {
     return moves;
 }
 
-std::vector<std::pair<int, int>> Queen::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> Queen::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
 
     // Define all 8 possible directions
@@ -244,7 +249,7 @@ std::vector<std::pair<int, int>> Queen::getValidMoves(Piece* board[8][8]) {
     return moves;
 }
 
-std::vector<std::pair<int, int>> King::getValidMoves(Piece* board[8][8]) {
+std::vector<std::pair<int, int>> King::getValidMoves(Piece* board[8][8]) const {
     std::vector<std::pair<int, int>> moves;
 
     int offsets[8][2] = {

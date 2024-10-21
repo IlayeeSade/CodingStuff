@@ -31,23 +31,24 @@ public:
     virtual void render();
 
     // Get valid moves
-    virtual std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) = 0;
+    virtual std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const = 0;
 
-    // Getters and Setters
-    SDL_Rect* getRect();
-    SDL_Surface* getSurface();
-    SDL_Texture* getTexture();
+    // Getters & Setters
+    SDL_Rect* getRect() const;
+    SDL_Surface* getSurface() const;
+    SDL_Texture* getTexture() const;
 
     void setRect(SDL_Rect* rect);
     void setSurface(SDL_Surface* surface);
     void setTexture(SDL_Texture* texture);
-    int getX();
-    int getY();
 
+    int getX() const;
+    int getY() const;
 
-    // Getters & Setters
-    bool getIsWhite();
-    std::pair<int, int> getCords();
+    bool getIsWhite() const;
+
+    void setCords(int x, int y);
+    std::pair<int, int> getCords() const;
 };
 
 // ======================
@@ -57,40 +58,40 @@ class King : public virtual Piece {
 public:
     King(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\king)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };
 
 class Queen : public virtual Piece {
 public:
     Queen(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\queen)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };
 
 class Rook : public virtual Piece {
 public:
     Rook(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\rook)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };
 
 class Bishop : public virtual Piece {
 public:
     Bishop(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\bishop)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };
 
 class Knight : public virtual Piece {
 public:
     Knight(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\knight)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };
 
 class Pawn : public virtual Piece {
 public:
     Pawn(bool isWhite, int x, int y) : Piece(std::string(R"(C:\Users\elais\source\repos\Game Engine\Game Engine\Assets\Chess_pieces\pawn)") + (isWhite ? ".png" : "1.png"), x, y, isWhite) {
     }
-    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]);
+    std::vector<std::pair<int, int>> getValidMoves(Piece* board[8][8]) const;
 };

@@ -8,6 +8,9 @@ class Board {
     Uint16 board_xsp;
     Uint16 board_ysp;
 
+    bool turn; // True for white's turn
+
+    Piece* due_piece;
     PieceManager* piece_manager;
     std::vector<std::pair<int, int>> valid_moves;
 public:

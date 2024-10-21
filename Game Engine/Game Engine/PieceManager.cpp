@@ -70,12 +70,10 @@ void PieceManager::renderPieces() {
 
 // Mouse methods
 
-std::vector<std::pair<int, int>> PieceManager::mouseDown(int x, int y) {
+std::vector<std::pair<int, int>> PieceManager::mouseDown(const Piece* piece, int x, int y) {
     SDL_Point clickPoint = { x, y };
-    int i = x / 100;
-    int j = y / 100;
-    Piece* piece = board[i][j];
     if (piece) {
+        // Check if the click is within the piece
         SDL_Rect* rect = piece->getRect();
         if (SDL_PointInRect(&clickPoint, rect)) {
             // Relative position logic
@@ -94,8 +92,7 @@ std::vector<std::pair<int, int>> PieceManager::mouseDown(int x, int y) {
                 Uint8 alpha = (pixel & surface->format->Amask) >> surface->format->Ashift;
 
                 if (alpha > ALPHA_THRESHOLD) {
-                    std::vector<std::pair<int, int>> vec = piece->getValidMoves(board);
-                    return vec;
+                    return piece->getValidMoves(board);
                 }
             }
         }
@@ -108,3 +105,11 @@ std::vector<std::pair<int, int>> PieceManager::mouseDown(int x, int y) {
 Piece* PieceManager::getPiece(int x, int y) const{
     return board[x][y];
 }
+
+void PieceManager::movePiece(Piece* piece, int x, int y) {
+    std::pair<int, int> cords = piece->getCords();
+	board[cords.first][cords.second] = nullptr;
+	piece->setCords(x, y);
+	board[x][y] = piece;
+}
+
